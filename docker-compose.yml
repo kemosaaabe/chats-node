@@ -5,8 +5,9 @@ services:
     build:
       context: .
       dockerfile: Dockerfile
+    container_name: chats-backend
     ports:
-      - "3000:3000"
+      - "4000:4000"
     env_file:
       - .env
     depends_on:
@@ -21,7 +22,7 @@ services:
       POSTGRES_PASSWORD: postgres
       POSTGRES_DB: chats
     ports:
-      - "5432:5432"
+      - "5433:5432"
     volumes:
       - postgres_data:/var/lib/postgresql/data
 
