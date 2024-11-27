@@ -6,6 +6,8 @@ services:
       context: .
       dockerfile: Dockerfile
     container_name: chats-backend
+    volumes:
+      - .:/app
     ports:
       - "4000:4000"
     env_file:

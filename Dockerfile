@@ -3,10 +3,11 @@ FROM node:18
 WORKDIR /app
 
 COPY package*.json ./
-COPY src ./src
 
 RUN npm install
 
-CMD ["npm", "start"]
+COPY . .
+
+CMD ["npm", "run", "dev"]
 
 EXPOSE 4000
