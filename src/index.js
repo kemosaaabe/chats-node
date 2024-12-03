@@ -1,29 +1,30 @@
 const express = require("express");
-const { Pool } = require("pg");
+const { connectDB, syncDB } = require("./database");
 require("dotenv").config();
+require("./models");
 
 const app = express();
 const port = process.env.PORT;
-
-const pool = new Pool({
-  host: process.env.DB_HOST,
-  port: process.env.DB_PORT,
-  user: process.env.DB_USER,
-  password: process.env.DB_PASSWORD,
-  database: process.env.DB_NAME,
-});
 
 app.use(express.json());
 
 app.get("/health", async (req, res) => {
   try {
-    await pool.query("SELECT NOW()");
-    res.send("Database is connected!");
+    res.send("Server is healthy!");
   } catch (err) {
-    res.status(500).send("Database connection failed");
+    res.status(500).send("Server health check failed");
   }
 });
 
-app.listen(port, () => {
-  console.log(`Server is running on http://localhost:${port}`);
-});
+(async () => {
+  try {
+    await connectDB();
+    await syncDB();
+    app.listen(port, () => {
+      console.log(`Server is running on http://localhost:${port}`);
+    });
+  } catch (err) {
+    console.error("Failed to initialize the app:", err);
+    process.exit(1);
+  }
+})();
