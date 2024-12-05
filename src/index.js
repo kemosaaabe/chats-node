@@ -1,13 +1,17 @@
 const express = require("express");
-const { connectDB, syncDB } = require("./database");
 require("dotenv").config();
+
+const { connectDB, syncDB } = require("./database");
 require("./models");
+
+const authRoutes = require("./routes/auth");
 
 const app = express();
 const port = process.env.PORT;
 
 app.use(express.json());
 
+// Routes
 app.get("/health", async (req, res) => {
   try {
     res.send("Server is healthy!");
@@ -15,6 +19,8 @@ app.get("/health", async (req, res) => {
     res.status(500).send("Server health check failed");
   }
 });
+
+app.use(authRoutes);
 
 (async () => {
   try {
