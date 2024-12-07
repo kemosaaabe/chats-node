@@ -23,7 +23,7 @@ const connectDB = async () => {
 
 const syncDB = async () => {
   try {
-    await sequelize.sync({ force: false });
+    await sequelize.sync({ alter: true });
     console.log("All models were synchronized successfully.");
   } catch (err) {
     console.error("Error syncing models:", err);
