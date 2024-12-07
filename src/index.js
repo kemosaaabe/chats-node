@@ -5,6 +5,7 @@ const { connectDB, syncDB } = require("./database");
 require("./models");
 
 const authRoutes = require("./routes/auth");
+const roomsRoutes = require("./routes/rooms");
 
 const app = express();
 const port = process.env.PORT;
@@ -21,6 +22,7 @@ app.get("/health", async (req, res) => {
 });
 
 app.use(authRoutes);
+app.use(roomsRoutes);
 
 (async () => {
   try {
