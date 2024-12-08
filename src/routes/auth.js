@@ -1,5 +1,6 @@
 const express = require("express");
 const bcrypt = require("bcrypt");
+const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
 const { User } = require("../models");
 
@@ -11,6 +12,14 @@ router.post("/api/register", async (req, res) => {
     const { username, password, email } = req.body;
 
     const hashedPassword = await bcrypt.hash(password, 10);
+
+    const existingUser = await User.findOne({
+      where: { [Op.or]: [{ username }, { email }] },
+    });
+
+    if (existingUser) {
+      res.status(409).json({ message: "Username or email are not unique" });
+    }
 
     const user = await User.create({
       username,
