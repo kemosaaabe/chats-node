@@ -36,6 +36,4 @@ const RoomMember = sequelize.define(
   }
 );
 
-RoomMember.sync({ alter: true });
-
 module.exports = RoomMember;

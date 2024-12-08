@@ -1,5 +1,6 @@
 const { Sequelize } = require("sequelize");
 const dbConfig = require("../config/dbConfig");
+// const createTestData = require("../initDb");
 
 const sequelize = new Sequelize(
   dbConfig.database,
@@ -25,6 +26,7 @@ const syncDB = async () => {
   try {
     await sequelize.sync({ alter: true });
     console.log("All models were synchronized successfully.");
+    // await createTestData();
   } catch (err) {
     console.error("Error syncing models:", err);
   }

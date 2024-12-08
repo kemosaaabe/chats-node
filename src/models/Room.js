@@ -15,6 +15,4 @@ const Room = sequelize.define(
   }
 );
 
-Room.sync({ alter: true });
-
 module.exports = Room;
