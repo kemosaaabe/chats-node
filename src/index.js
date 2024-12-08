@@ -6,6 +6,7 @@ require("./models");
 
 const authRoutes = require("./routes/auth");
 const roomsRoutes = require("./routes/rooms");
+const messagesRoutes = require("./routes/messages");
 
 const app = express();
 const port = process.env.PORT;
@@ -23,6 +24,7 @@ app.get("/health", async (req, res) => {
 
 app.use(authRoutes);
 app.use(roomsRoutes);
+app.use(messagesRoutes);
 
 (async () => {
   try {
