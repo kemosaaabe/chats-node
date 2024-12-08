@@ -1,4 +1,4 @@
-const { User, Room } = require("./models");
+const { User, Room, Message } = require("./models");
 const bcrypt = require("bcrypt");
 
 async function createTestData() {

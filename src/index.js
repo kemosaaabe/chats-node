@@ -1,12 +1,13 @@
 const express = require("express");
 require("dotenv").config();
 
-const { connectDB, syncDB } = require("./database");
+const { syncDB } = require("./database");
 require("./models");
 
 const authRoutes = require("./routes/auth");
 const roomsRoutes = require("./routes/rooms");
 const messagesRoutes = require("./routes/messages");
+const createTestData = require("./initDb");
 
 const app = express();
 const port = process.env.PORT;
@@ -28,8 +29,8 @@ app.use(messagesRoutes);
 
 (async () => {
   try {
-    await connectDB();
     await syncDB();
+    await createTestData();
     app.listen(port, () => {
       console.log(`Server is running on http://localhost:${port}`);
     });
