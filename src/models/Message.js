@@ -27,6 +27,9 @@ const Message = sequelize.define(
     content: {
       type: DataTypes.TEXT,
       allowNull: false,
+      validate: {
+        len: [0, 255],
+      },
     },
   },
   { timestamps: true, tableName: "messages" }

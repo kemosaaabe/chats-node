@@ -1,6 +1,10 @@
 const { Message } = require("../models");
+const { handleValidationErrors } = require("../validations/libs");
 
 const createMessage = async (req, res) => {
+  const validationError = handleValidationErrors(req, res);
+  if (validationError) return validationError;
+
   const { roomId } = req.params;
   const { content } = req.body;
   const userId = req.userId;
@@ -19,6 +23,9 @@ const createMessage = async (req, res) => {
 };
 
 const updateMessage = async (req, res) => {
+  const validationError = handleValidationErrors(req, res);
+  if (validationError) return validationError;
+
   const { messageId } = req.params;
   const { content } = req.body;
   const userId = req.userId;
