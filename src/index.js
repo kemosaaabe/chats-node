@@ -1,4 +1,5 @@
 const express = require("express");
+const cors = require("cors");
 require("dotenv").config();
 
 const { syncDB } = require("./database");
@@ -13,7 +14,16 @@ const createTestData = require("./initDb");
 const app = express();
 const port = process.env.PORT;
 
+const corsOptions = {
+  origin: (_origin, callback) => {
+    callback(null, true);
+  },
+  credentials: true,
+  optionsSuccessStatus: 200,
+};
+
 app.use(express.json());
+app.use(cors(corsOptions));
 
 app.use(authRoutes);
 app.use(roomsRoutes);
