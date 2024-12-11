@@ -7,6 +7,7 @@ require("./models");
 const authRoutes = require("./routes/auth");
 const roomsRoutes = require("./routes/rooms");
 const messagesRoutes = require("./routes/messages");
+const userRoutes = require("./routes/user");
 const createTestData = require("./initDb");
 
 const app = express();
@@ -17,6 +18,7 @@ app.use(express.json());
 app.use(authRoutes);
 app.use(roomsRoutes);
 app.use(messagesRoutes);
+app.use(userRoutes);
 
 (async () => {
   try {

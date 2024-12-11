@@ -8,15 +8,24 @@ const User = sequelize.define(
       type: DataTypes.STRING(50),
       allowNull: false,
       unique: true,
+      validate: {
+        len: [3, 50],
+      },
     },
     email: {
-      type: DataTypes.STRING(100),
+      type: DataTypes.STRING(50),
       allowNull: false,
       unique: true,
+      validate: {
+        len: [3, 50],
+      },
     },
     password: {
       type: DataTypes.STRING(255),
       allowNull: false,
+      validate: {
+        len: [6, 255],
+      },
     },
   },
   {

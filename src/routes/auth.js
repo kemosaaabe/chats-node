@@ -2,12 +2,20 @@ const express = require("express");
 const bcrypt = require("bcrypt");
 const { Op } = require("sequelize");
 const jwt = require("jsonwebtoken");
+
 const { User } = require("../models");
+const {
+  registerValidation,
+  loginValidation,
+} = require("../validations/userValidation");
+const { handleValidationErrors } = require("../validations/libs");
 
 const router = express.Router();
 
-// Registration
-router.post("/api/register", async (req, res) => {
+router.post("/api/register", registerValidation, async (req, res) => {
+  const validationError = handleValidationErrors(req, res);
+  if (validationError) return validationError;
+
   try {
     const { username, password, email } = req.body;
 
@@ -18,23 +26,28 @@ router.post("/api/register", async (req, res) => {
     });
 
     if (existingUser) {
-      res.status(409).json({ message: "Username or email are not unique" });
+      return res
+        .status(409)
+        .json({ message: "Username or email are not unique" });
     }
 
-    const user = await User.create({
+    await User.create({
       username,
       password: hashedPassword,
       email,
     });
 
-    res.status(201).json({ message: "User registered successfully", user });
+    res.status(201).json({ status: "success register" });
   } catch (error) {
     console.error(error);
     res.status(500).json({ error: "Registration failed" });
   }
 });
 
-router.post("/api/login", async (req, res) => {
+router.post("/api/login", loginValidation, async (req, res) => {
+  const validationError = handleValidationErrors(req, res);
+  if (validationError) return validationError;
+
   try {
     const { username, password } = req.body;
 
