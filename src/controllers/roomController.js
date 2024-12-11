@@ -1,4 +1,5 @@
 const { Room, Message, User } = require("../models");
+const { handleValidationErrors } = require("../validations/libs");
 
 const getAllRooms = async (_req, res) => {
   try {
@@ -39,6 +40,9 @@ const getCurrentRoom = async (req, res) => {
 };
 
 const createRoom = async (req, res) => {
+  const validationError = handleValidationErrors(req, res);
+  if (validationError) return validationError;
+
   try {
     const { name } = req.body;
     await Room.create({ name });
@@ -66,6 +70,9 @@ const deleteRoom = async (req, res) => {
 };
 
 const updateRoom = async (req, res) => {
+  const validationError = handleValidationErrors(req, res);
+  if (validationError) return validationError;
+
   try {
     const { id } = req.params;
     const { name } = req.body;

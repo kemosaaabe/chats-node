@@ -7,6 +7,9 @@ const Room = sequelize.define(
     name: {
       type: DataTypes.STRING(100),
       allowNull: false,
+      validate: {
+        len: [3, 100],
+      },
     },
   },
   {
