@@ -1,21 +1,4 @@
-const { Message, User } = require("../models");
-
-const getRoomMessages = async (req, res) => {
-  const { roomId } = req.params;
-
-  try {
-    const messages = await Message.findAll({
-      where: { room_id: roomId },
-      order: [["createdAt", "ASC"]],
-      include: { model: User, attributes: ["username"], as: "user" },
-    });
-
-    res.status(200).json({ messages });
-  } catch (error) {
-    console.log(error);
-    res.status(500).json({ error: "Server error" });
-  }
-};
+const { Message } = require("../models");
 
 const createMessage = async (req, res) => {
   const { roomId } = req.params;
@@ -23,19 +6,13 @@ const createMessage = async (req, res) => {
   const userId = req.userId;
 
   try {
-    const message = await Message.create({
+    await Message.create({
       content,
       user_id: userId,
       room_id: roomId,
     });
 
-    const roomMessages = await Message.findAll({
-      where: { room_id: message.room_id },
-      order: [["createdAt", "ASC"]],
-      include: { model: User, attributes: ["username"], as: "user" },
-    });
-
-    res.status(201).json({ messages: roomMessages });
+    res.status(201).json({ status: "success create" });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
@@ -61,13 +38,7 @@ const updateMessage = async (req, res) => {
 
     await message.update({ content, updatedAt: new Date() });
 
-    const roomMessages = await Message.findAll({
-      where: { room_id: message.room_id },
-      order: [["createdAt", "ASC"]],
-      include: { model: User, attributes: ["username"], as: "user" },
-    });
-
-    res.status(200).json({ messages: roomMessages });
+    res.status(200).json({ status: "success update" });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
@@ -92,20 +63,13 @@ const deleteMessage = async (req, res) => {
 
     await message.destroy();
 
-    const roomMessages = await Message.findAll({
-      where: { room_id: message.room_id },
-      order: [["createdAt", "ASC"]],
-      include: { model: User, attributes: ["username"], as: "user" },
-    });
-
-    res.status(200).json({ messages: roomMessages });
+    res.status(200).json({ status: "success delete" });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
 };
 
 module.exports = {
-  getRoomMessages,
   createMessage,
   updateMessage,
   deleteMessage,

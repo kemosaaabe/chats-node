@@ -5,12 +5,6 @@ const messageController = require("../controllers/messageController");
 
 const messagesUrl = "/api/messages";
 
-router.get(
-  `${messagesUrl}/:roomId`,
-  verifyToken,
-  messageController.getRoomMessages
-);
-
 router.post(
   `${messagesUrl}/:roomId`,
   verifyToken,

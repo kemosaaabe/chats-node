@@ -6,8 +6,8 @@ const RoomMember = require("./RoomMember");
 User.hasMany(Message, { foreignKey: "user_id", as: "messages" });
 Message.belongsTo(User, { foreignKey: "user_id", as: "user" });
 
-Room.hasMany(Message, { foreignKey: "room_id" });
-Message.belongsTo(Room, { foreignKey: "room_id" });
+Room.hasMany(Message, { foreignKey: "room_id", as: "messages" });
+Message.belongsTo(Room, { foreignKey: "room_id", as: "room" });
 
 User.belongsToMany(Room, { through: RoomMember, foreignKey: "user_id" });
 Room.belongsToMany(User, { through: RoomMember, foreignKey: "room_id" });
