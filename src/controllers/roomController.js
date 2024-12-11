@@ -4,7 +4,7 @@ const { handleValidationErrors } = require("../validations/libs");
 const getAllRooms = async (_req, res) => {
   try {
     const rooms = await Room.findAll();
-    res.status(200).json(rooms);
+    res.status(200).json({ data: rooms });
   } catch (error) {
     res.status(500).json({ error: "Server error" });
   }
