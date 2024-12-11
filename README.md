@@ -1,3 +1,26 @@
+Изначально создаются тестовые данные (пользователь, пару комнат и несколько сообщений в комнатах)  
+Данные пользователя:  
+```
+user: {
+  username: "test_user",
+  password: "test1234",
+  email: "test_user@example.com"
+}
+```
+
+Запуск проекта:  
+```
+// сбилдить и запустить контейнеры
+docker compose up --build
+
+// остановить контейнеры, очистив базу
+docker compose down -v
+
+// остановить контейнеры
+docker compose down
+// или просто Ctrl + C
+```
+
 ### Backend port: 4000
 ### Auth
 #### Register
